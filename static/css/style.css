@@ -6,6 +6,11 @@ body {
     min-height: 100%;   
 }
 
+.navbar {
+    border-radius: 0;
+}
+
+
 #footer {
     position: relative;
     width: 100%;
@@ -16,7 +21,7 @@ body {
 
 #hr-footer {
     display: block;
-    border: 3px solid black;
+    border: 3px solid green;
 }
 
 #map-first {
