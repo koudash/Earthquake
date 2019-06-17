@@ -25,7 +25,7 @@ Promise.all([
     pointToLayer: (feature, latlng) => {
       return new L.circle(latlng, {
         radius: radiusPuller(feature),
-        fillColor: colorPuller(feature),
+        fillColor: colorPuller(feature.properties.mag),
         fillOpacity: 1,
         stroke: true,
         weight: 0.5
@@ -48,7 +48,7 @@ Promise.all([
         mouseout: (e) => {
           layer = e.target;
           layer.setStyle({
-            fillColor: colorPuller(feature)   // Reset circle fill color once mouse moved away
+            fillColor: colorPuller(feature.properties.mag)   // Reset circle fill color once mouse moved away
           });
           layer.closePopup();
         } 
@@ -101,12 +101,36 @@ Promise.all([
     center: [37.09, -95.71],
     zoom: 3,
     layers: [streetsSatelliteMap, tectonicBndr, earthquakes]
-  });
+  });  
 
   // Create a layer control and add it to the map
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
+
+  // Create legend on bottom right of the chart
+  // https://gis.stackexchange.com/questions/133630/adding-leaflet-legend
+  let legend = L.control({
+    position: "bottomright"
+  });
+
+  legend.onAdd = function() {
+
+    let div = L.DomUtil.create('div', "legend"),
+        dummyMagArr = [0, 1, 2, 3, 4, 5];
+    
+    for (let i = 0; i < dummyMagArr.length; i++) {
+      
+      div.innerHTML +=
+        "<i style=\"background-color: " + colorPuller(dummyMagArr[i] + 1) + "\"></i> " +
+        dummyMagArr[i] + (dummyMagArr[i + 1] ? "-" + dummyMagArr[i + 1] + "<br>" : "+");
+
+    }
+
+    return div;
+  };
+
+  legend.addTo(myMap);
 
 
 
@@ -114,10 +138,7 @@ Promise.all([
    * Determine the visualization color for each datapoint based on its magnitude point value
    * @param {*} feature feature of each datapoint retrieved from earthquake url
    */
-  function colorPuller(feature) {
-  
-    // Calculate the integer part of the mag figure
-    let mag = feature.properties.mag;
+  function colorPuller(mag) {
 
     return mag > 5 ? "orangered" :
             mag > 4 ? "lightcoral" :
@@ -137,6 +158,10 @@ Promise.all([
   }
 
 });
+
+
+
+
 
 
 
