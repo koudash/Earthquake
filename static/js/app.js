@@ -28,7 +28,7 @@ Promise.all([
 
     pointToLayer: (feature, latlng) => {
       return new L.circle(latlng, {
-        raidus: radiusPuller(feature),
+        radius: radiusPuller(feature),
         fillColor: colorPuller(feature),
         fillOpacity: 1,
         stroke: true,
@@ -44,7 +44,6 @@ Promise.all([
         mouseover: (e) => {
           layer = e.target;
           layer.setStyle({
-            radius: 150000,
             fillColor: "black"
           });
           layer.openPopup();
@@ -52,7 +51,6 @@ Promise.all([
         mouseout: (e) => {
           layer = e.target;
           layer.setStyle({
-            radius: radiusPuller(feature),
             fillColor: colorPuller(feature)
           });
           layer.closePopup();
@@ -138,7 +136,7 @@ Promise.all([
    */
   function radiusPuller(feature) {  
    
-    return feature.properties.mag * 20000;
+    return feature.properties.mag * 25000;
   }
 
 });
