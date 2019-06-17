@@ -41,14 +41,14 @@ Promise.all([
         mouseover: (e) => {
           layer = e.target;
           layer.setStyle({
-            fillColor: "black"
+            fillColor: "black"    // Fill hovered circle with black color
           });
           layer.openPopup();
         },
         mouseout: (e) => {
           layer = e.target;
           layer.setStyle({
-            fillColor: colorPuller(feature)
+            fillColor: colorPuller(feature)   // Reset circle fill color once mouse moved away
           });
           layer.closePopup();
         } 
