@@ -3,19 +3,7 @@ const eqUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_wee
 // Data url for tectonic plates
       tectonicPlatesUrl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
 
-// Array of legend color info
-let colorScale = [
-  {"mathTruncNum": 0,
-  "color": "greenyellow"},
-  {"mathTruncNum": 1,
-  "color": "yellow"}, 
-  {"mathTruncNum": 2,
-  "color": "goldenrod"},
-  {"mathTruncNum": 3,
-  "color": "darkorange"},
-  {"mathTruncNum": 4,
-  "color": "lightcoral"},
-];
+
 
 
 
@@ -134,24 +122,16 @@ Promise.all([
   function colorPuller(feature) {
   
     // Calculate the integer part of the mag figure
-    let magTrunc = Math.trunc(feature.properties.mag);
-  
-    // Variable for the visualization color of each datapoint on the map
-    let color = "";
-  
-    // Determine color
-    if (magTrunc >= 5) {
-      color = "orangered";  
-    } else {
-      colorScale.forEach((score) => {
-        if (score.mathTruncNum === magTrunc) color = score.color;
-      });
-    }
-    
-    return color;
+    let mag = feature.properties.mag;
+
+    return mag > 5 ? "orangered" :
+            mag > 4 ? "lightcoral" :
+            mag > 3 ? "darkorange" :
+            mag > 2 ? "goldenrod" :
+            mag > 1 ? "yellow" : "greenyellow";
   
   }
-  
+
   /**
    * Determine the radius (relative) of circle for each datapoint based on its magnitude point value
    * @param {*} feature feature of each datapoint retrieved from earthquake url
