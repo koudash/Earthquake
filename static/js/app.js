@@ -3,18 +3,13 @@ const eqUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_wee
 // Data url for tectonic plates
       tectonicPlatesUrl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
 
-
-
-
-
-
+// Load two urls asynchronously
 Promise.all([
   d3.json(eqUrl),
   d3.json(tectonicPlatesUrl)
 ]).then((data) => {
-
   
-  // 
+  // Create GeoJSON layer for tectonic plate layer 
   let tectonicBndr = L.geoJson(data[1], {
     color: "orange",
     weight: 2
@@ -26,6 +21,7 @@ Promise.all([
   // Create GeoJSON layers
   let earthquakes = L.geoJSON(features, {
 
+    // Cricles determined by "mag"
     pointToLayer: (feature, latlng) => {
       return new L.circle(latlng, {
         radius: radiusPuller(feature),
@@ -38,6 +34,7 @@ Promise.all([
       
     },
     
+    // Event listener for "mouseover" and "mouseout"
     onEachFeature: (feature, layer) => {
 
       layer.on({
@@ -57,7 +54,7 @@ Promise.all([
         } 
       });
 
-      layer.bindPopup(`<h5>${feature.properties.place}</h5><hr>
+      layer.bindPopup(`<h6><strong>${feature.properties.place}</strong></h6><hr>
       <p><strong>Magnitude:</strong> ${feature.properties.mag}</p>
       <p><strong>Time:</strong> ${new Date(feature.properties.time)}</p>`);
 
