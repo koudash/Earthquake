@@ -20,8 +20,9 @@
             crossorigin=""></script>
         <!-- Local style CSS -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-        <!-- Avoid fake favicon requests -->
-        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <!-- Favicon -->
+        <!-- Downloaded from https://pngtree.com/free-icon/earthquake_1358962; Change color using Photoshop -->
+        <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.png') }}">
     </head>
     <body>
         <nav id="navbar" class="navbar bg-success">
