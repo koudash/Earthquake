@@ -6,4 +6,4 @@ Application is deployed on Heroku and can be accessed <a href="https://koudash-u
 
 A screenshot is posted below.
 
-<img src=".static/images/HTML Screenshot.png" alt="HTML Screenshot">
+<img src="./static/images/HTML Screenshot.png" alt="HTML Screenshot">
